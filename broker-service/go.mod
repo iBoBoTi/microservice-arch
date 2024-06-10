@@ -1,6 +1,6 @@
 module github.com/iBoBoTi/microservice-arch/broker-service
 
-go 1.18
+go 1.22
 
 require (
 	github.com/go-chi/chi/v5 v5.0.8 // indirect
