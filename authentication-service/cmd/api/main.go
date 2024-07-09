@@ -14,12 +14,11 @@ import (
 	_ "github.com/jackc/pgx/v4/stdlib"
 )
 
-
 const webPort = "80"
 
 var counts int64
 
-func main(){
+func main() {
 	log.Println("Starting Authentication Service...")
 
 	// connect to db
@@ -28,15 +27,14 @@ func main(){
 		log.Panic("Can't connect to Postgres!")
 	}
 
-
 	app := Config{
-		DB: conn,
+		DB:     conn,
 		Models: data.New(conn),
 	}
 
 	// http server
 	srv := &http.Server{
-		Addr: fmt.Sprintf(":%s", webPort),
+		Addr:    fmt.Sprintf(":%s", webPort),
 		Handler: app.routes(),
 	}
 
@@ -44,8 +42,8 @@ func main(){
 	log.Fatal(srv.ListenAndServe())
 }
 
-func OpenDB(dsn string) (*sql.DB, error){
-	db, err :=  sql.Open("pgx", dsn)
+func OpenDB(dsn string) (*sql.DB, error) {
+	db, err := sql.Open("pgx", dsn)
 	if err != nil {
 		return nil, fmt.Errorf("error connecting to postgres: %v", err)
 	}
@@ -72,7 +70,7 @@ func connectToDB() *sql.DB {
 			return connection
 		}
 
-		if counts > 10{
+		if counts > 10 {
 			log.Println(err)
 			return nil
 		}

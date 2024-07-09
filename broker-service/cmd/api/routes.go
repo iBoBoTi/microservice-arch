@@ -10,17 +10,17 @@ import (
 
 type Config struct{}
 
-func (app *Config) routes() http.Handler{
+func (app *Config) routes() http.Handler {
 	mux := chi.NewRouter()
 
 	// who is allowed to connect
 	mux.Use(cors.Handler(cors.Options{
-		AllowedOrigins: []string{"https://*", "http://*"},
-		AllowedHeaders: []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
-		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		ExposedHeaders: []string{"Link"},
+		AllowedOrigins:   []string{"https://*", "http://*"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		ExposedHeaders:   []string{"Link"},
 		AllowCredentials: true,
-		MaxAge: 300,
+		MaxAge:           300,
 	}))
 
 	mux.Use(middleware.Heartbeat("/ping"))
@@ -28,6 +28,6 @@ func (app *Config) routes() http.Handler{
 	mux.Post("/", app.Broker)
 
 	mux.Post("/handle", app.HandleSubmission)
-	
+
 	return mux
-} 
+}
